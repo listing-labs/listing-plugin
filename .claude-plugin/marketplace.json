@@ -9,7 +9,7 @@
   "plugins": [
     {
       "name": "listing",
-      "source": ".",
+      "source": "./",
       "description": "Manage your listing.ai profile, articles, and search the marketplace"
     }
   ]
