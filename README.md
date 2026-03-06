@@ -1,23 +1,24 @@
 # listing-plugin
 
-Skills and MCP configuration for [listing.ai](https://listing.ai) — use with Claude Code to manage your profile, write articles, and search the marketplace.
+Skills and MCP configuration for [listing.ai](https://listing.ai) — use with Claude Code or Claude Desktop to manage your profile, write articles, and search the marketplace.
 
 ## Install
 
-### Plugin (MCP server + skills)
+### Claude Code
 
 Installs the MCP server connection and all skills:
 
-```bash
-claude plugin add listing-ai/listing-plugin
+```
+/plugin marketplace add listing-labs/listing-plugin
+/plugin install listing@listing
 ```
 
 ### Skills only
 
-Installs just the skills (configure the MCP server separately):
+Installs just the skills using [vercel-labs/skills](https://github.com/vercel-labs/skills) (configure the MCP server separately):
 
 ```bash
-npx skills add listing-ai/listing-plugin
+npx skills add listing-labs/listing-plugin
 ```
 
 ### MCP server only
@@ -29,16 +30,33 @@ claude mcp add --transport http listing https://mcp.prod.listing.ai/mcp \
   --header "X-API-Key: ${LISTING_API_KEY}"
 ```
 
+### Claude Desktop / claude.ai
+
+#### Plugin (MCP server + skills)
+
+1. Go to **Settings > Plugins > Browse plugins > Personal**
+2. Click **+** → **Add marketplace from GitHub**
+3. Enter `listing-labs/listing-plugin`
+
+This installs the MCP connector and all skills. You'll be prompted to sign in via OAuth on first use — no API key needed.
+
+#### Connector only (MCP server)
+
+1. Go to **Settings > Connectors > Add custom connector**
+2. Enter the server URL: `https://mcp.prod.listing.ai/mcp`
+3. Click **Add**
+
 ## Prerequisites
 
-1. A [listing.ai](https://listing.ai) account
-2. An API key (generate one at **listing.ai > Settings > API Keys**)
+A [listing.ai](https://listing.ai) account is required for profile and article tools. Search tools (`search_listings`, `get_search_filters`) work without authentication.
+
+**Claude Code** uses an API key for authentication. Generate one at **listing.ai > Settings > API Keys**:
 
 ```bash
 export LISTING_API_KEY="lst_your_key_here"
 ```
 
-Search tools (`search_listings`, `get_search_filters`) work without authentication.
+**Claude Desktop** authenticates via OAuth automatically — no API key needed.
 
 ## Skills
 

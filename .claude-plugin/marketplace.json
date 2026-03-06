@@ -1,0 +1,16 @@
+{
+  "name": "listing",
+  "owner": {
+    "name": "listing.ai"
+  },
+  "metadata": {
+    "description": "Manage your listing.ai profile, articles, and search the marketplace"
+  },
+  "plugins": [
+    {
+      "name": "listing",
+      "source": ".",
+      "description": "Manage your listing.ai profile, articles, and search the marketplace"
+    }
+  ]
+}
