@@ -2,7 +2,7 @@
   "mcpServers": {
     "listing": {
       "type": "http",
-      "url": "${LISTING_MCP_URL:-https://mcp.prod.listing.ai/mcp}",
+      "url": "https://mcp.prod.listing.ai/mcp",
       "headers": {
         "X-API-Key": "${LISTING_API_KEY}"
       }
