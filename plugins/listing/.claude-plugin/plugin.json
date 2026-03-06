@@ -1,6 +1,6 @@
 {
   "name": "listing",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Manage your listing.ai profile, articles, and search the marketplace",
   "author": { "name": "listing.ai" },
   "repository": "https://github.com/listing-labs/listing-plugin"
