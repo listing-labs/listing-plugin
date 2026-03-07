@@ -6,6 +6,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-03-06
+
+### Added
+
+- `manage-intents` skill for creating and managing persistent saved searches with webhook notifications
+- Intent tools documentation in `listing-api` skill (list, get, create, update, delete, get results, pause, resume)
+- Intent tools section in README
+
+### Changed
+
+- Article `content` field now documented as Markdown (raw HTML will not be rendered)
+- Bumped plugin version to 1.1.0
+
+## [1.0.0] - 2026-03-06
+
 ### Added
 
 - Marketplace manifest (`.claude-plugin/marketplace.json`) for plugin discovery in Claude Desktop and Claude Code

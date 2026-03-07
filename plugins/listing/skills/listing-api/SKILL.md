@@ -1,6 +1,6 @@
 ---
 name: listing-api
-description: Core knowledge for interacting with the listing.ai API — profile, article, and search tools via MCP.
+description: Core knowledge for interacting with the listing.ai API — profile, article, intent, and search tools via MCP.
 user-invocable: false
 ---
 
@@ -97,7 +97,7 @@ Create a new article.
 | Field | Type | Required | Constraints |
 |-------|------|----------|-------------|
 | `title` | string | yes | 1-500 chars |
-| `content` | string | no | article body (HTML) |
+| `content` | string | no | article body (Markdown — raw HTML will not be rendered) |
 | `status` | `"draft"` or `"published"` | no | defaults to draft |
 | `article_type` | `"article"` or `"link"` | no | |
 | `link_url` | string (URL) | no | for link-type articles |
@@ -126,6 +126,112 @@ Delete an article.
 | `id` | string (UUID) | yes |
 
 Returns: success confirmation text.
+
+### list_intents
+
+List saved search intents, optionally filtered by status.
+
+- Tool: `mcp__listing__list_intents`
+- Parameters:
+
+| Field | Type | Required |
+|-------|------|----------|
+| `status` | `"active"` or `"paused"` | no |
+
+Returns: array of intent objects.
+
+### get_intent
+
+Get a single search intent by ID.
+
+- Tool: `mcp__listing__get_intent`
+- Parameters:
+
+| Field | Type | Required |
+|-------|------|----------|
+| `id` | string (UUID) | yes |
+
+Returns: single intent object.
+
+### create_intent
+
+Create a persistent saved search. The query is automatically classified into semantic search terms and structured filters.
+
+- Tool: `mcp__listing__create_intent`
+- Parameters:
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `query` | string | yes | Natural language search query (max 1000 chars) |
+| `listing_type_id` | string | no | Restrict to: `product`, `service`, `event`, `property`, `other` |
+| `context_budget` | `"low"`, `"medium"`, `"high"` | no | How much context to include in results |
+| `result_format` | `"full"`, `"summary"`, `"ids"` | no | Result detail level |
+| `max_results` | integer (1-100) | no | Maximum results per match cycle |
+| `webhook_url` | string (URL) | no | URL to POST notifications when new matches are found |
+| `expires_at` | string (ISO-8601) | no | Expiration timestamp |
+
+Returns: intent object with `extracted` field showing parsed semantic query and filters.
+
+### update_intent
+
+Partial update — only send fields you want to change. If the query changes, filters and embedding are automatically re-extracted.
+
+- Tool: `mcp__listing__update_intent`
+- Parameters: same as `create_intent` plus required `id` (UUID). All fields except `id` are optional. Nullable fields (`listing_type_id`, `webhook_url`, `expires_at`) can be set to `null` to clear them.
+
+### delete_intent
+
+Delete a search intent (soft delete).
+
+- Tool: `mcp__listing__delete_intent`
+- Parameters:
+
+| Field | Type | Required |
+|-------|------|----------|
+| `id` | string (UUID) | yes |
+
+Returns: success confirmation text.
+
+### get_intent_results
+
+Get paginated match results for a search intent.
+
+- Tool: `mcp__listing__get_intent_results`
+- Parameters:
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `id` | string (UUID) | yes | Intent ID |
+| `limit` | integer (1-100) | no, default 20 | Max results |
+| `offset` | integer (>= 0) | no, default 0 | Pagination offset |
+
+Returns: `{ results: [...], total: number }` where each result has `listing_id`, `score`, `notified`, and `matched_at`.
+
+### pause_intent
+
+Pause a search intent so it stops matching new listings.
+
+- Tool: `mcp__listing__pause_intent`
+- Parameters:
+
+| Field | Type | Required |
+|-------|------|----------|
+| `id` | string (UUID) | yes |
+
+Returns: updated intent object with `status: "paused"`.
+
+### resume_intent
+
+Resume a paused search intent.
+
+- Tool: `mcp__listing__resume_intent`
+- Parameters:
+
+| Field | Type | Required |
+|-------|------|----------|
+| `id` | string (UUID) | yes |
+
+Returns: updated intent object with `status: "active"`.
 
 ### search_listings
 

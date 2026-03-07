@@ -48,7 +48,7 @@ This installs the MCP connector and all skills. You'll be prompted to sign in vi
 
 ## Prerequisites
 
-A [listing.ai](https://listing.ai) account is required for profile and article tools. Search tools (`search_listings`, `get_search_filters`) work without authentication.
+A [listing.ai](https://listing.ai) account is required for profile, article, and intent tools. Search tools (`search_listings`, `get_search_filters`) work without authentication.
 
 **Claude Code** uses an API key for authentication. Generate one at **listing.ai > Settings > API Keys**:
 
@@ -66,6 +66,7 @@ export LISTING_API_KEY="lst_your_key_here"
 | `manage-profile` | `/listing:manage-profile` | View and update your listing.ai profile |
 | `write-article` | `/listing:write-article [topic]` | Research, draft, and publish an article |
 | `search-listings` | `/listing:search-listings [query]` | Search the marketplace with filters and refinement |
+| `manage-intents` | `/listing:manage-intents [query]` | Create and manage persistent saved searches with notifications |
 
 ## MCP Tools
 
@@ -85,6 +86,19 @@ export LISTING_API_KEY="lst_your_key_here"
 | `create_article` | Create a new article |
 | `update_article` | Update an existing article |
 | `delete_article` | Delete an article |
+
+### Intents (saved searches)
+
+| Tool | Description |
+|------|-------------|
+| `list_intents` | List saved search intents, optionally filter by status |
+| `get_intent` | Get a single intent by ID |
+| `create_intent` | Create a persistent saved search with automatic query classification |
+| `update_intent` | Update an intent (re-extracts filters if query changes) |
+| `delete_intent` | Delete an intent (soft delete) |
+| `get_intent_results` | Get paginated match results for an intent |
+| `pause_intent` | Pause an intent so it stops matching |
+| `resume_intent` | Resume a paused intent |
 
 ### Search (no auth required)
 

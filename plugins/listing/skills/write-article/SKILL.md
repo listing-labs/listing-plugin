@@ -33,6 +33,7 @@ Ask the user to approve or adjust the outline before proceeding.
 ### Step 2: Write the Draft
 
 Write a complete article based on the approved outline. The article should be:
+- Written in **Markdown** format (raw HTML will not be rendered)
 - Professional and informative
 - Well-structured with clear headings
 - Appropriate length (typically 800-1500 words)
