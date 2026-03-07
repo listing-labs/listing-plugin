@@ -94,6 +94,31 @@ Show the updated intent to confirm.
 
 Confirm with the user before calling `mcp__listing__delete_intent`. This is a soft delete.
 
+## Webhook Notifications
+
+When a `webhook_url` is set on an intent, the system POSTs to that URL whenever new listings match. The payload looks like:
+
+```json
+{
+  "event": "intent.match",
+  "intent_id": "uuid",
+  "listings": [
+    { "id": "listing-uuid", "score": 0.92 }
+  ],
+  "timestamp": "ISO-8601"
+}
+```
+
+- **Delivery**: POST with 10-second timeout, no retries
+- **Success**: any 2xx response marks results as `notified: true`
+- **Failure**: results remain `notified: false` but are still visible via `get_intent_results` — nothing is lost
+- The receiver can use `listings[].id` to fetch full details via search tools
+
+When explaining webhooks to the user, let them know:
+- Their endpoint just needs to accept a POST and return 200
+- The payload includes listing IDs and match scores, not full listing details
+- Failed deliveries don't retry, but matched results are never lost
+
 ## Notes
 
 - All intent tools require authentication.

@@ -233,6 +233,39 @@ Resume a paused search intent.
 
 Returns: updated intent object with `status: "active"`.
 
+### Webhook Postback
+
+When an intent has a `webhook_url` set, the system POSTs to that URL when new listings match. This is server-initiated, not triggered by any MCP tool call.
+
+- **Method**: POST, Content-Type: `application/json`
+- **Timeout**: 10 seconds, no retries
+- **Success**: any 2xx marks matched results as `notified: true`
+
+**Payload:**
+
+```json
+{
+  "event": "intent.match",
+  "intent_id": "uuid",
+  "listings": [
+    { "id": "listing-uuid", "score": 0.92 }
+  ],
+  "timestamp": "ISO-8601"
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `event` | string | Always `"intent.match"` |
+| `intent_id` | string (UUID) | The intent that was matched |
+| `listings[].id` | string (UUID) | Listing ID — fetch full details via search tools |
+| `listings[].score` | number (0–1) | Semantic similarity score (higher = better match) |
+| `timestamp` | string (ISO-8601) | When the match was detected |
+
+On failed delivery, `intent_result` rows remain `notified: false` but are still visible via `get_intent_results`.
+
+---
+
 ### search_listings
 
 Search for listings in the marketplace. Does not require authentication.

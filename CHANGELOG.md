@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-03-06
+
+### Added
+
+- Webhook postback payload documentation in `manage-intents` skill and `listing-api` API reference
+- Delivery details (method, timeout, retries, success criteria) and field descriptions for `intent.match` events
+
 ## [1.1.0] - 2026-03-06
 
 ### Added
