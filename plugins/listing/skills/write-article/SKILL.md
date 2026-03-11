@@ -6,6 +6,7 @@ allowed-tools:
   - mcp__listing__get_profile
   - mcp__listing__create_article
   - mcp__listing__update_article
+  - mcp__listing__publish_article
   - WebSearch
 ---
 
@@ -51,7 +52,7 @@ Show the user the created article's ID and confirm it was saved as a draft.
 
 Ask the user if they'd like to publish the article now or leave it as a draft for further editing.
 
-If they want to publish, use `mcp__listing__update_article` with the article's `id` and `status: "published"`.
+If they want to publish, use `mcp__listing__publish_article` with the article's `id`. This publishes the article and creates a linked post.
 
 ## Notes
 

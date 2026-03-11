@@ -1,6 +1,6 @@
 ---
 name: listing-api
-description: Core knowledge for interacting with the listing.ai API — profile, article, intent, and search tools via MCP.
+description: Core knowledge for interacting with the listing.ai API — profile, article, conversation, intent, and search tools via MCP.
 user-invocable: false
 ---
 
@@ -126,6 +126,133 @@ Delete an article.
 | `id` | string (UUID) | yes |
 
 Returns: success confirmation text.
+
+### publish_article
+
+Publish a draft article — makes it publicly visible and creates a linked post.
+
+- Tool: `mcp__listing__publish_article`
+- Parameters:
+
+| Field | Type | Required |
+|-------|------|----------|
+| `id` | string (UUID) | yes |
+
+Returns: updated article object.
+
+### unpublish_article
+
+Unpublish an article — reverts it to draft status and hides the linked post.
+
+- Tool: `mcp__listing__unpublish_article`
+- Parameters:
+
+| Field | Type | Required |
+|-------|------|----------|
+| `id` | string (UUID) | yes |
+
+Returns: updated article object.
+
+### list_conversations
+
+List your conversations, optionally filtered by status.
+
+- Tool: `mcp__listing__list_conversations`
+- Parameters:
+
+| Field | Type | Required |
+|-------|------|----------|
+| `status` | `"active"` or `"archived"` | no (default: active) |
+
+Returns: array of conversation objects.
+
+### get_conversation
+
+Get a single conversation by ID, including members and last message.
+
+- Tool: `mcp__listing__get_conversation`
+- Parameters:
+
+| Field | Type | Required |
+|-------|------|----------|
+| `id` | string (UUID) | yes |
+
+Returns: single conversation object with members and last message.
+
+### create_conversation
+
+Start a new conversation with another user, or return an existing one if a conversation already exists with the same recipient and context.
+
+- Tool: `mcp__listing__create_conversation`
+- Parameters:
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `recipient_id` | string (UUID) | yes | User ID of the recipient |
+| `message` | string | no | Optional initial message to send |
+| `context_type` | `"direct"`, `"profile"`, `"listing"`, `"post"` | no | Conversation context type (default: profile) |
+| `context_id` | string | no | ID of the context object (e.g. listing ID, post ID) |
+
+Returns: conversation object.
+
+### update_conversation
+
+Update a conversation — mark as read or archive it.
+
+- Tool: `mcp__listing__update_conversation`
+- Parameters:
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `id` | string (UUID) | yes | Conversation ID |
+| `action` | `"mark_read"` or `"archive"` | yes | Action to perform |
+
+Returns: updated conversation object.
+
+### delete_conversation
+
+Archive (soft delete) a conversation.
+
+- Tool: `mcp__listing__delete_conversation`
+- Parameters:
+
+| Field | Type | Required |
+|-------|------|----------|
+| `id` | string (UUID) | yes |
+
+Returns: success confirmation text.
+
+### list_messages
+
+Get paginated messages in a conversation, with optional cursor-based pagination.
+
+- Tool: `mcp__listing__list_messages`
+- Parameters:
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `id` | string (UUID) | yes | Conversation ID |
+| `limit` | integer (1-100) | no, default 50 | Max messages to return |
+| `offset` | integer (>= 0) | no, default 0 | Pagination offset |
+| `before` | string (ISO-8601) | no | Get messages before this timestamp |
+| `after` | string (ISO-8601) | no | Get messages after this timestamp |
+
+Returns: `{ messages: [...], total: number }` with paginated message objects.
+
+### send_message
+
+Send a message in a conversation.
+
+- Tool: `mcp__listing__send_message`
+- Parameters:
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `id` | string (UUID) | yes | Conversation ID |
+| `content` | string | yes | Message content |
+| `message_type` | `"text"`, `"system"`, `"ai_response"` | no, default `"text"` | Message type |
+
+Returns: created message object.
 
 ### list_intents
 

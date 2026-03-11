@@ -6,6 +6,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-03-10
+
+### Added
+
+- `manage-conversations` skill for viewing and managing conversations and messages
+- Conversation tools documentation in `listing-api` skill (list, get, create, update, delete, list_messages, send_message)
+- `publish_article` and `unpublish_article` tools for article publishing workflow
+- Conversations tools section in README
+
+### Changed
+
+- `write-article` skill now uses `publish_article` tool instead of updating status directly
+- Updated plugin description to include conversations
+- Bumped plugin version to 1.3.0
+
 ## [1.2.0] - 2026-03-06
 
 ### Added

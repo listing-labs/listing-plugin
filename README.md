@@ -1,6 +1,6 @@
 # listing-plugin
 
-Skills and MCP configuration for [listing.ai](https://listing.ai) — use with Claude Code or Claude Desktop to manage your profile, write articles, and search the marketplace.
+Skills and MCP configuration for [listing.ai](https://listing.ai) — use with Claude Code or Claude Desktop to manage your profile, write articles, message other users, and search the marketplace.
 
 ## Install
 
@@ -48,7 +48,7 @@ This installs the MCP connector and all skills. You'll be prompted to sign in vi
 
 ## Prerequisites
 
-A [listing.ai](https://listing.ai) account is required for profile, article, and intent tools. Search tools (`search_listings`, `get_search_filters`) work without authentication.
+A [listing.ai](https://listing.ai) account is required for profile, article, conversation, and intent tools. Search tools (`search_listings`, `get_search_filters`) work without authentication.
 
 **Claude Code** uses an API key for authentication. Generate one at **listing.ai > Settings > API Keys**:
 
@@ -66,6 +66,7 @@ export LISTING_API_KEY="lst_your_key_here"
 | `manage-profile` | `/listing:manage-profile` | View and update your listing.ai profile |
 | `write-article` | `/listing:write-article [topic]` | Research, draft, and publish an article |
 | `search-listings` | `/listing:search-listings [query]` | Search the marketplace with filters and refinement |
+| `manage-conversations` | `/listing:manage-conversations` | View and manage conversations and messages |
 | `manage-intents` | `/listing:manage-intents [query]` | Create and manage persistent saved searches with notifications |
 
 ## MCP Tools
@@ -86,6 +87,20 @@ export LISTING_API_KEY="lst_your_key_here"
 | `create_article` | Create a new article |
 | `update_article` | Update an existing article |
 | `delete_article` | Delete an article |
+| `publish_article` | Publish a draft article and create a linked post |
+| `unpublish_article` | Unpublish an article and hide the linked post |
+
+### Conversations
+
+| Tool | Description |
+|------|-------------|
+| `list_conversations` | List conversations, optionally filter by status |
+| `get_conversation` | Get a conversation with members and last message |
+| `create_conversation` | Start a new conversation (or return existing) |
+| `update_conversation` | Mark as read or archive a conversation |
+| `delete_conversation` | Archive a conversation (soft delete) |
+| `list_messages` | Get paginated messages in a conversation |
+| `send_message` | Send a message in a conversation |
 
 ### Intents (saved searches)
 
